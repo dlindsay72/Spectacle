@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B0F0EE320AA016F00AA3CC8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0F0EE220AA016F00AA3CC8 /* Extensions.swift */; };
 		7BFEBE9920A9E3E10063E809 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFEBE9820A9E3E10063E809 /* AppDelegate.swift */; };
 		7BFEBE9B20A9E3E10063E809 /* RegistrationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFEBE9A20A9E3E10063E809 /* RegistrationVC.swift */; };
 		7BFEBE9E20A9E3E10063E809 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7BFEBE9C20A9E3E10063E809 /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7B0F0EE220AA016F00AA3CC8 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7BFEBE9520A9E3E10063E809 /* Spectacle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spectacle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BFEBE9820A9E3E10063E809 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7BFEBE9A20A9E3E10063E809 /* RegistrationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationVC.swift; sourceTree = "<group>"; };
@@ -35,6 +37,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7B0F0EE120AA014C00AA3CC8 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				7B0F0EE220AA016F00AA3CC8 /* Extensions.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		7BFEBE8C20A9E3E10063E809 = {
 			isa = PBXGroup;
 			children = (
@@ -54,6 +64,7 @@
 		7BFEBE9720A9E3E10063E809 /* Spectacle */ = {
 			isa = PBXGroup;
 			children = (
+				7B0F0EE120AA014C00AA3CC8 /* Utilities */,
 				7BFEBEAC20A9E47C0063E809 /* Model */,
 				7BFEBEAB20A9E4780063E809 /* View */,
 				7BFEBEAA20A9E4700063E809 /* Controller */,
@@ -160,6 +171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BFEBE9B20A9E3E10063E809 /* RegistrationVC.swift in Sources */,
+				7B0F0EE320AA016F00AA3CC8 /* Extensions.swift in Sources */,
 				7BFEBE9920A9E3E10063E809 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
