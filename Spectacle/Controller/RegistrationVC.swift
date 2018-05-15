@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import Firebase
 
 class RegistrationVC: UIViewController {
     
+    //MARK: - Class Properties
     let addPhotoBtn: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "plus_photo").withRenderingMode(.alwaysOriginal), for: .normal)
@@ -23,6 +25,8 @@ class RegistrationVC: UIViewController {
         textField.keyboardType = .emailAddress
         textField.backgroundColor = UIColor(white: 0, alpha: 0.03)
         textField.font = UIFont.init(name: "Courier", size: 20)
+        
+        textField.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return textField
     }()
     
@@ -32,6 +36,7 @@ class RegistrationVC: UIViewController {
         textField.borderStyle = .roundedRect
         textField.backgroundColor = UIColor(white: 0, alpha: 0.03)
         textField.font = UIFont.init(name: "Courier", size: 20)
+        textField.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return textField
     }()
 
@@ -42,19 +47,24 @@ class RegistrationVC: UIViewController {
         textField.borderStyle = .roundedRect
         textField.backgroundColor = UIColor(white: 0, alpha: 0.03)
         textField.font = UIFont.init(name: "Courier", size: 20)
+        textField.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return textField
     }()
     
     let signUpBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
-        button.backgroundColor = #colorLiteral(red: 0.1607843137, green: 0.5764705882, blue: 0.8941176471, alpha: 1)
+        button.backgroundColor = #colorLiteral(red: 0.2784313725, green: 0.5803921569, blue: 0.9450980392, alpha: 1)
         button.tintColor = .white
         button.titleLabel?.font = UIFont.init(name: "Courier-Bold", size: 30)
         button.layer.cornerRadius = 5.0
+        
+        button.addTarget(self, action: #selector(signUpBtnPressed), for: .touchUpInside)
+        button.isEnabled = false
         return button
     }()
 
+    //MARK: - Class Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(addPhotoBtn)
@@ -64,6 +74,7 @@ class RegistrationVC: UIViewController {
         setupInputFields()
     }
     
+    //MARK: - Custom Methods
     fileprivate func setupInputFields() {
         
         let stackView = UIStackView(arrangedSubviews: [emailTextField, usernameTextField, passwordTextField, signUpBtn])
@@ -75,8 +86,37 @@ class RegistrationVC: UIViewController {
         
         stackView.anchor(top: addPhotoBtn.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 200)
     }
+    
+    @objc func handleTextInputChange() {
+        let isFormValid = emailTextField.text?.count ?? 0 > 0 && usernameTextField.text?.count ?? 0 > 0 && passwordTextField.text?.count ?? 0 > 0
+        
+        if isFormValid {
+            signUpBtn.isEnabled = true
+            signUpBtn.backgroundColor = #colorLiteral(red: 0.2784313725, green: 0.5803921569, blue: 0.9450980392, alpha: 1)
+        } else {
+            signUpBtn.isEnabled = false
+            signUpBtn.backgroundColor = #colorLiteral(red: 0.2274509804, green: 0.5764705882, blue: 0.9333333333, alpha: 0.5530019264)
+        }
+        
+    }
+    
+    @objc func signUpBtnPressed() {
+        guard let email = emailTextField.text, email.count > 0 else { return }
+        guard let username = usernameTextField.text, username.count > 0 else { return }
+        guard let password = passwordTextField.text, password.count > 0 else { return }
+        
+        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
+            if let error = error {
+                print("Failed to create user: \(error.localizedDescription)")
+                return
+            }
+            print("Successfully created user:", user?.uid ?? "")
+        }
+    }
 
 }
+
+//MARK: - UIView Extension
 
 extension UIView {
     func anchor(top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat) {
