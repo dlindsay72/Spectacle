@@ -14,13 +14,17 @@ class RegistrationVC: UIViewController {
     //MARK: - Class Properties
     let addPhotoBtn: UIButton = {
         let button = UIButton()
+        
         button.setImage(#imageLiteral(resourceName: "plus_photo").withRenderingMode(.alwaysOriginal), for: .normal)
+        
+        button.addTarget(self, action: #selector(addProfilePhotoBtnPressed), for: .touchUpInside)
         return button
     }()
     
     let emailTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Email"
+        textField.autocapitalizationType = .none
         textField.borderStyle = .roundedRect
         textField.keyboardType = .emailAddress
         textField.backgroundColor = UIColor(white: 0, alpha: 0.03)
@@ -32,6 +36,7 @@ class RegistrationVC: UIViewController {
     
     let usernameTextField: UITextField = {
         let textField = UITextField()
+        textField.autocapitalizationType = .none
         textField.placeholder = "Username"
         textField.borderStyle = .roundedRect
         textField.backgroundColor = UIColor(white: 0, alpha: 0.03)
@@ -42,6 +47,7 @@ class RegistrationVC: UIViewController {
 
     let passwordTextField: UITextField = {
         let textField = UITextField()
+        textField.autocapitalizationType = .none
         textField.placeholder = "Password"
         textField.isSecureTextEntry = true
         textField.borderStyle = .roundedRect
@@ -111,41 +117,64 @@ class RegistrationVC: UIViewController {
                 return
             }
             print("Successfully created user:", user?.uid ?? "")
+            
+            guard let image = self.addPhotoBtn.imageView?.image else { return }
+            guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }
+            
+            let filename = NSUUID().uuidString
+            Storage.storage().reference().child("profile_images").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, error) in
+                if let error = error {
+                    print("Failed to upload profile image:", error)
+                    return
+                }
+                guard let profileImageURL = metadata?.downloadURL()?.absoluteString else { return }
+                print("Successfully uploaded profile image", profileImageURL)
+                
+                guard let uid = user?.uid else { return }
+                
+                let dictionaryValues = ["username": username, "profileImageUrl": profileImageURL]
+                let values = [uid: dictionaryValues]
+                
+                Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (error, ref) in
+                    if let error = error {
+                        print("Failed to save user info into DB:", error)
+                        return
+                    }
+                    print("successfully saved user info into database")
+                })
+
+            })
         }
+    }
+    
+    @objc func addProfilePhotoBtnPressed() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        present(imagePickerController, animated: true, completion: nil)
     }
 
 }
 
-//MARK: - UIView Extension
+//MARK: - ImagePickerControllerDelegate & NavigationControllerDelegate
 
-extension UIView {
-    func anchor(top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat) {
-        translatesAutoresizingMaskIntoConstraints = false
-        if let top = top {
-            self.topAnchor.constraint(equalTo: top, constant: paddingTop).isActive = true
-        }
+extension RegistrationVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
-        if let left = left {
-            self.leftAnchor.constraint(equalTo: left, constant: paddingLeft).isActive = true
+        if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
+            addPhotoBtn.setImage(editedImage.withRenderingMode(.alwaysOriginal), for: .normal)
+        } else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
+            addPhotoBtn.setImage(originalImage.withRenderingMode(.alwaysOriginal), for: .normal)
         }
-        
-        if let bottom = bottom {
-            self.bottomAnchor.constraint(equalTo: bottom, constant: -paddingBottom).isActive = true
-        }
-        
-        if let right = right {
-            self.rightAnchor.constraint(equalTo: right, constant: -paddingRight).isActive = true
-        }
-        
-        if width != 0 {
-            self.widthAnchor.constraint(equalToConstant: width)
-        }
-        
-        if height != 0 {
-            self.heightAnchor.constraint(equalToConstant: height)
-        }
+        addPhotoBtn.layer.cornerRadius = addPhotoBtn.frame.width / 2
+        addPhotoBtn.layer.masksToBounds = true
+        addPhotoBtn.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        addPhotoBtn.layer.borderWidth = 2.0
+        dismiss(animated: true, completion: nil)
     }
 }
+
+
 
 
 
