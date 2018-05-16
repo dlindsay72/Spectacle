@@ -69,12 +69,24 @@ class RegistrationVC: UIViewController {
         button.isEnabled = false
         return button
     }()
+    
+    let alreadyHaveAccountBtn: UIButton = {
+        let button = UIButton(type: .system)
+        
+        let attributedTitle = NSMutableAttributedString(string: "Already have an account?  ", attributes: [NSAttributedStringKey.font: UIFont.init(name: "Courier", size: 14) ?? UIFont.systemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)])
+        attributedTitle.append(NSAttributedString(string: "Login", attributes: [NSAttributedStringKey.font: UIFont.init(name: "Courier-Bold", size: 14) ?? UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.3215686275, green: 0.5607843137, blue: 0.9450980392, alpha: 1)]))
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        button.addTarget(self, action: #selector(toLoginVC), for: .touchUpInside)
+        return button
+    }()
 
     //MARK: - Class Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(addPhotoBtn)
+        view.addSubview(alreadyHaveAccountBtn)
+        alreadyHaveAccountBtn.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
         addPhotoBtn.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 40, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 140, height: 140)
         addPhotoBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
@@ -92,6 +104,10 @@ class RegistrationVC: UIViewController {
         view.addSubview(stackView)
         
         stackView.anchor(top: addPhotoBtn.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 200)
+    }
+    
+    @objc func toLoginVC() {
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func handleTextInputChange() {
