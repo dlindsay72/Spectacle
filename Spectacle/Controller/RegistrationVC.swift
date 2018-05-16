@@ -73,6 +73,7 @@ class RegistrationVC: UIViewController {
     //MARK: - Class Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         view.addSubview(addPhotoBtn)
         addPhotoBtn.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 40, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 140, height: 140)
         addPhotoBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
