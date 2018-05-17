@@ -60,7 +60,7 @@ class RegistrationVC: UIViewController {
     let signUpBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
-        button.backgroundColor = #colorLiteral(red: 0.2784313725, green: 0.5803921569, blue: 0.9450980392, alpha: 1)
+        button.backgroundColor = #colorLiteral(red: 0.2274509804, green: 0.5764705882, blue: 0.9333333333, alpha: 0.5530019264)
         button.tintColor = .white
         button.titleLabel?.font = UIFont.init(name: "Courier-Bold", size: 30)
         button.layer.cornerRadius = 5.0
@@ -158,6 +158,10 @@ class RegistrationVC: UIViewController {
                         return
                     }
                     print("successfully saved user info into database")
+                    
+                    guard let mainTabVC = UIApplication.shared.keyWindow?.rootViewController as? MainTabVC else { return }
+                    mainTabVC.setupViewControllers()
+                    self.dismiss(animated: true, completion: nil)
                 })
 
             })

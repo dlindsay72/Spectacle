@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginVC: UIViewController {
     
@@ -47,7 +48,7 @@ class LoginVC: UIViewController {
         textField.backgroundColor = UIColor(white: 0, alpha: 0.03)
         textField.font = UIFont.init(name: "Courier", size: 20)
         
-    //    textField.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+        textField.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return textField
     }()
     
@@ -59,19 +60,19 @@ class LoginVC: UIViewController {
         textField.borderStyle = .roundedRect
         textField.backgroundColor = UIColor(white: 0, alpha: 0.03)
         textField.font = UIFont.init(name: "Courier", size: 20)
-   //     textField.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+        textField.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
         return textField
     }()
     
     let loginBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Login", for: .normal)
-        button.backgroundColor = #colorLiteral(red: 0.2784313725, green: 0.5803921569, blue: 0.9450980392, alpha: 1)
+        button.backgroundColor = #colorLiteral(red: 0.2274509804, green: 0.5764705882, blue: 0.9333333333, alpha: 0.5530019264)
         button.tintColor = .white
         button.titleLabel?.font = UIFont.init(name: "Courier-Bold", size: 30)
         button.layer.cornerRadius = 5.0
         
-      //  button.addTarget(self, action: #selector(signUpBtnPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(loginBtnPressed), for: .touchUpInside)
         button.isEnabled = false
         return button
     }()
@@ -98,6 +99,35 @@ class LoginVC: UIViewController {
         
         view.addSubview(stackView)
         stackView.anchor(top: logoContainerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 40, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 140)
+    }
+    
+    @objc func handleTextInputChange() {
+        let isFormValid = emailTextField.text?.count ?? 0 > 0 && passwordTextField.text?.count ?? 0 > 0
+        
+        if isFormValid {
+            loginBtn.isEnabled = true
+            loginBtn.backgroundColor = #colorLiteral(red: 0.2784313725, green: 0.5803921569, blue: 0.9450980392, alpha: 1)
+        } else {
+            loginBtn.isEnabled = false
+            loginBtn.backgroundColor = #colorLiteral(red: 0.2274509804, green: 0.5764705882, blue: 0.9333333333, alpha: 0.5530019264)
+        }
+    }
+    
+    @objc func loginBtnPressed() {
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        
+        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+            if let error = error {
+                print("Failed to sign in with email:", error)
+                return
+            }
+            print("Successfully logged back in with user:", user?.uid ?? "")
+            
+            guard let mainTabVC = UIApplication.shared.keyWindow?.rootViewController as? MainTabVC else { return }
+            mainTabVC.setupViewControllers()
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     @objc func showRegistrationVC() {
