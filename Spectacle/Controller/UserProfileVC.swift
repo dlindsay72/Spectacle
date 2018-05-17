@@ -9,12 +9,13 @@
 import UIKit
 import Firebase
 
-public let headerIdentifier = "header"
-public let userProfileCellIdentifier = "userProfileCell"
+
 
 class UserProfileVC: UICollectionViewController {
     
     var user: User?
+    let headerIdentifier = "header"
+    let userProfileCellIdentifier = "userProfileCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()

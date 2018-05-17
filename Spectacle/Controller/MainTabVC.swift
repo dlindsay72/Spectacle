@@ -13,6 +13,7 @@ class MainTabVC: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.delegate = self
         
         if Auth.auth().currentUser == nil {
             DispatchQueue.main.async {
@@ -59,6 +60,22 @@ class MainTabVC: UITabBarController {
         navController.tabBarItem.image = image
         navController.tabBarItem.selectedImage = selectedImage
         return navController
+    }
+}
+
+extension MainTabVC: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        
+        let index = viewControllers?.index(of: viewController)
+        if index == 2 {
+            let layout = UICollectionViewFlowLayout()
+            let photoSelectorVC = PhotoSelectorVC(collectionViewLayout: layout)
+            let navController = UINavigationController(rootViewController: photoSelectorVC)
+            present(navController, animated: true, completion: nil)
+            return false
+        }
+        
+        return true
     }
 }
 
