@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Photos
 
 class PhotoSelectorVC: UICollectionViewController {
     
@@ -15,6 +15,7 @@ class PhotoSelectorVC: UICollectionViewController {
     
     let photoSelectorCellId = "photoSelectorCell"
     let photoSelectorHeaderId = "photoSelectorHeader"
+    var images = [UIImage]()
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -26,8 +27,10 @@ class PhotoSelectorVC: UICollectionViewController {
         collectionView?.backgroundColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
         setupNavButtons()
         
-        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: photoSelectorCellId)
+        collectionView?.register(PhotoSelectorCell.self, forCellWithReuseIdentifier: photoSelectorCellId)
         collectionView?.register(UICollectionViewCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: photoSelectorHeaderId)
+        
+        fetchPhotos()
     }
     
     //MARK: - Custom Methods
@@ -35,6 +38,28 @@ class PhotoSelectorVC: UICollectionViewController {
         navigationController?.navigationBar.tintColor = .black
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelBtnPressed))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextBtnPressed))
+    }
+    
+    fileprivate func fetchPhotos() {
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.fetchLimit = images.count
+        let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
+        fetchOptions.sortDescriptors = [sortDescriptor]
+        let allPhotos = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+        allPhotos.enumerateObjects { (asset, count, stop) in
+            let imageManager = PHImageManager.default()
+            let targetSize = CGSize(width: 350, height: 350)
+            let options = PHImageRequestOptions()
+            options.isSynchronous = true
+            imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFit, options: options, resultHandler: { (image, info) in
+                if let image = image {
+                    self.images.append(image)
+                }
+                if count == allPhotos.count - 1 {
+                    self.collectionView?.reloadData()
+                }
+            })
+        }
     }
     
     @objc func cancelBtnPressed() {
@@ -49,12 +74,12 @@ class PhotoSelectorVC: UICollectionViewController {
 //MARK: - UICollectionView methods and UICollectionViewFlowLayout
 extension PhotoSelectorVC: UICollectionViewDelegateFlowLayout {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return images.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: photoSelectorCellId, for: indexPath)
-        cell.backgroundColor = .purple
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: photoSelectorCellId, for: indexPath) as! PhotoSelectorCell
+        cell.photoimageView.image = images[indexPath.item]
         return cell
     }
     
