@@ -9,8 +9,6 @@
 import UIKit
 import Firebase
 
-
-
 class UserProfileVC: UICollectionViewController {
     
     var user: User?
