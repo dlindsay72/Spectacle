@@ -11,10 +11,13 @@ import Firebase
 
 class UserProfileVC: UICollectionViewController {
     
+    //MARK: - Class Properties
     var user: User?
     let headerIdentifier = "header"
     let userProfileCellIdentifier = "userProfileCell"
+    var posts = [Post]()
     
+    //MARK: - Class Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,10 +27,10 @@ class UserProfileVC: UICollectionViewController {
         fetchUser()
         
         collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerIdentifier)
-        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: userProfileCellIdentifier)
+        collectionView?.register(UserProfilePhotoCell.self, forCellWithReuseIdentifier: userProfileCellIdentifier)
         
         setupLogoutButton()
-        
+        fetchPosts()
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -37,21 +40,40 @@ class UserProfileVC: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
+        return posts.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userProfileCellIdentifier, for: indexPath)
-        cell.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userProfileCellIdentifier, for: indexPath) as! UserProfilePhotoCell
+        cell.post = posts[indexPath.item]
         return cell
     }
     
     fileprivate func setupLogoutButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(logoutUser))
     }
+    
+    fileprivate func fetchPosts() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let ref = Database.database().reference().child("posts").child(uid)
+        
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let dictionaries = snapshot.value as? [String: Any] else { return }
+            dictionaries.forEach({ (key, value) in
+                guard let dictionary = value as? [String: Any] else { return }
+
+                let post = Post(dictionary: dictionary)
+                self.posts.append(post)
+            })
+            self.collectionView?.reloadData()
+        }) { (error) in
+            print("Failed to fetch posts:", error)
+        }
+    }
         
     fileprivate func fetchUser() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
+        
         Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
             print(snapshot.value ?? "")
             guard let dictionary = snapshot.value as? [String: Any] else { return }
@@ -84,6 +106,7 @@ class UserProfileVC: UICollectionViewController {
     }
 }
 
+//MARK: - UICollectionViewDelegateFlowLayout
 extension UserProfileVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.width, height: 200)
