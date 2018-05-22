@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import Firebase
 
 class SharePhotoVC: UIViewController {
     
-    
+    //MARK: - Class Properties
     var selectedImage: UIImage? {
         didSet {
             self.sharePhotoImageView.image = selectedImage
@@ -35,6 +36,7 @@ class SharePhotoVC: UIViewController {
         return textView
     }()
     
+    //MARK: - Class Properties
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
@@ -57,6 +59,40 @@ class SharePhotoVC: UIViewController {
     }
     
     @objc func shareBtnPressed() {
-        print("Sharing photo")
+        guard let caption = textView.text, caption.count > 0 else { return }
+        guard let image = selectedImage else { return }
+        guard let uploadData = UIImageJPEGRepresentation(image, 0.5) else { return }
+        
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        let filename = NSUUID().uuidString
+        Storage.storage().reference().child("posts").child(filename).putData(uploadData, metadata: nil) { (metadata, error) in
+            if let error = error {
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
+                print("Failed to upload post image:", error)
+                return
+            }
+            guard let imageUrl = metadata?.downloadURL()?.absoluteString else { return }
+            
+            print("Successfully uploaded post image:",  imageUrl)
+            self.saveToDatabase(withImageUrl: imageUrl)
+        }
+    }
+    
+    fileprivate func saveToDatabase(withImageUrl imageUrl: String) {
+        guard let postImage = selectedImage else { return }
+        guard let caption = textView.text else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let userPostRef = Database.database().reference().child("posts").child(uid)
+        let ref = userPostRef.childByAutoId()
+        let values = ["imageUrl": imageUrl, "caption": caption, "imageWidth": postImage.size.width, "imageHeight": postImage.size.height, "creationDate": Date().timeIntervalSince1970] as [String : Any]
+        ref.updateChildValues(values) { (error, ref) in
+            if let error = error {
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
+                print("Failed to save post to database:", error)
+                return
+            }
+            print("Successfully saved post to database")
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 }
