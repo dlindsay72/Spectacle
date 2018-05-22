@@ -16,6 +16,7 @@
 		7B32F7F120AF8FC000524FBB /* PhotoSelectorHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B32F7F020AF8FC000524FBB /* PhotoSelectorHeader.swift */; };
 		7B3D3FB820AA6C7A006B0AC8 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3D3FB720AA6C7A006B0AC8 /* UIView+Ext.swift */; };
 		7BC5E6D720AB7DE400219C49 /* UserProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC5E6D620AB7DE400219C49 /* UserProfileHeader.swift */; };
+		7BD28D8C20B4655A004BC81E /* SharePhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD28D8B20B4655A004BC81E /* SharePhotoVC.swift */; };
 		7BEC1ABA20AF428600501F26 /* PhotoSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC1AB920AF428600501F26 /* PhotoSelectorCell.swift */; };
 		7BFEBE9920A9E3E10063E809 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFEBE9820A9E3E10063E809 /* AppDelegate.swift */; };
 		7BFEBE9B20A9E3E10063E809 /* RegistrationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFEBE9A20A9E3E10063E809 /* RegistrationVC.swift */; };
@@ -36,6 +37,7 @@
 		7B32F7F020AF8FC000524FBB /* PhotoSelectorHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorHeader.swift; sourceTree = "<group>"; };
 		7B3D3FB720AA6C7A006B0AC8 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		7BC5E6D620AB7DE400219C49 /* UserProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeader.swift; sourceTree = "<group>"; };
+		7BD28D8B20B4655A004BC81E /* SharePhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePhotoVC.swift; sourceTree = "<group>"; };
 		7BEC1AB920AF428600501F26 /* PhotoSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorCell.swift; sourceTree = "<group>"; };
 		7BFEBE9520A9E3E10063E809 /* Spectacle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spectacle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BFEBE9820A9E3E10063E809 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				7B208B6620AB4CDB00FBB669 /* UserProfileVC.swift */,
 				7B0ECC0220AC9BEC008C85BC /* LoginVC.swift */,
 				7B1FF85C20AE26870081D279 /* PhotoSelectorVC.swift */,
+				7BD28D8B20B4655A004BC81E /* SharePhotoVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 				7BFEBE9920A9E3E10063E809 /* AppDelegate.swift in Sources */,
 				7B208B6720AB4CDB00FBB669 /* UserProfileVC.swift in Sources */,
 				7BEC1ABA20AF428600501F26 /* PhotoSelectorCell.swift in Sources */,
+				7BD28D8C20B4655A004BC81E /* SharePhotoVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

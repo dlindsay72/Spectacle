@@ -18,6 +18,7 @@ class PhotoSelectorVC: UICollectionViewController {
     var images = [UIImage]()
     var selectedImage: UIImage?
     var assets = [PHAsset]()
+    var header: PhotoSelectorHeader?
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -87,7 +88,9 @@ class PhotoSelectorVC: UICollectionViewController {
     }
     
     @objc func nextBtnPressed() {
-        print("Next pressed")
+        let sharePhotoVC = SharePhotoVC()
+        sharePhotoVC.selectedImage = header?.photoImageView.image
+        navigationController?.pushViewController(sharePhotoVC, animated: true)
     }
 }
 
@@ -111,6 +114,9 @@ extension PhotoSelectorVC: UICollectionViewDelegateFlowLayout {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.selectedImage = images[indexPath.item]
         self.collectionView?.reloadData()
+        
+        let indexPath = IndexPath(item: 0, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -128,8 +134,8 @@ extension PhotoSelectorVC: UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: photoSelectorHeaderId, for: indexPath) as! PhotoSelectorHeader
-        header.photoimageView.image = selectedImage
-        
+        header.photoImageView.image = selectedImage
+        self.header = header
         if let selectedImage = selectedImage {
             if let index = self.images.index(of: selectedImage) {
                 let selectedAsset = self.assets[index]
@@ -137,7 +143,7 @@ extension PhotoSelectorVC: UICollectionViewDelegateFlowLayout {
                 let imageManager = PHImageManager.default()
                 let targetSize = CGSize(width: 700, height: 700)
                 imageManager.requestImage(for: selectedAsset, targetSize: targetSize, contentMode: .default, options: nil) { (image, info) in
-                    header.photoimageView.image = image
+                    header.photoImageView.image = image
                 }
             }
         }
