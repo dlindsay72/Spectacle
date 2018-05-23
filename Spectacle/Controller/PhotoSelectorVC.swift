@@ -78,10 +78,7 @@ class PhotoSelectorVC: UICollectionViewController {
                 })
             }
         }
-        
     }
-    
-    
     
     @objc func cancelBtnPressed() {
         dismiss(animated: true, completion: nil)
