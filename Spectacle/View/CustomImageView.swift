@@ -8,12 +8,19 @@
 
 import UIKit
 
+var imageCache = [String: UIImage]()
+
 class CustomImageView: UIImageView {
     var lastURLUsedToLoadImage: String?
     
     func loadImage(fromUrlString urlString: String) {
-        print("Loading image...")
         lastURLUsedToLoadImage = urlString
+        
+        if let cacheImage = imageCache[urlString] {
+            self.image = cacheImage
+            return
+        }
+        
         guard let url = URL(string: urlString) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -29,6 +36,8 @@ class CustomImageView: UIImageView {
             guard let imageData = data else { return }
             
             let photoImage = UIImage(data: imageData)
+            imageCache[url.absoluteString] = photoImage
+            
             DispatchQueue.main.async {
                 self.image = photoImage
             }

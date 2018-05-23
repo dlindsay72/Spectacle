@@ -17,6 +17,8 @@
 		7B3D3FB820AA6C7A006B0AC8 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3D3FB720AA6C7A006B0AC8 /* UIView+Ext.swift */; };
 		7B8AB2F020B5F10A00B59554 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8AB2EF20B5F10A00B59554 /* User.swift */; };
 		7BC5E6D720AB7DE400219C49 /* UserProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC5E6D620AB7DE400219C49 /* UserProfileHeader.swift */; };
+		7BC95DFE20B621FA0007121B /* HomePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC95DFD20B621FA0007121B /* HomePostCell.swift */; };
+		7BCB4E6820B61CB3007FC5C7 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCB4E6720B61CB3007FC5C7 /* HomeVC.swift */; };
 		7BD07F4E20B4E8FF00D9E99C /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD07F4D20B4E8FF00D9E99C /* CustomImageView.swift */; };
 		7BD28D8C20B4655A004BC81E /* SharePhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD28D8B20B4655A004BC81E /* SharePhotoVC.swift */; };
 		7BEC1ABA20AF428600501F26 /* PhotoSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC1AB920AF428600501F26 /* PhotoSelectorCell.swift */; };
@@ -42,6 +44,8 @@
 		7B3D3FB720AA6C7A006B0AC8 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		7B8AB2EF20B5F10A00B59554 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7BC5E6D620AB7DE400219C49 /* UserProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeader.swift; sourceTree = "<group>"; };
+		7BC95DFD20B621FA0007121B /* HomePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostCell.swift; sourceTree = "<group>"; };
+		7BCB4E6720B61CB3007FC5C7 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		7BD07F4D20B4E8FF00D9E99C /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		7BD28D8B20B4655A004BC81E /* SharePhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePhotoVC.swift; sourceTree = "<group>"; };
 		7BEC1AB920AF428600501F26 /* PhotoSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorCell.swift; sourceTree = "<group>"; };
@@ -140,6 +144,7 @@
 				7B0ECC0220AC9BEC008C85BC /* LoginVC.swift */,
 				7B1FF85C20AE26870081D279 /* PhotoSelectorVC.swift */,
 				7BD28D8B20B4655A004BC81E /* SharePhotoVC.swift */,
+				7BCB4E6720B61CB3007FC5C7 /* HomeVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -152,6 +157,7 @@
 				7B32F7F020AF8FC000524FBB /* PhotoSelectorHeader.swift */,
 				7BFCFA2520B4B85500561888 /* UserProfilePhotoCell.swift */,
 				7BD07F4D20B4E8FF00D9E99C /* CustomImageView.swift */,
+				7BC95DFD20B621FA0007121B /* HomePostCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -286,6 +292,7 @@
 			files = (
 				7B3D3FB820AA6C7A006B0AC8 /* UIView+Ext.swift in Sources */,
 				7BC5E6D720AB7DE400219C49 /* UserProfileHeader.swift in Sources */,
+				7BC95DFE20B621FA0007121B /* HomePostCell.swift in Sources */,
 				7B0ECC0320AC9BEC008C85BC /* LoginVC.swift in Sources */,
 				7BFEBE9B20A9E3E10063E809 /* RegistrationVC.swift in Sources */,
 				7B8AB2F020B5F10A00B59554 /* User.swift in Sources */,
@@ -294,6 +301,7 @@
 				7B0F0EE320AA016F00AA3CC8 /* UIColor+Ext.swift in Sources */,
 				7B1FF85D20AE26870081D279 /* PhotoSelectorVC.swift in Sources */,
 				7B32F7F120AF8FC000524FBB /* PhotoSelectorHeader.swift in Sources */,
+				7BCB4E6820B61CB3007FC5C7 /* HomeVC.swift in Sources */,
 				7B208B6520AB4BE100FBB669 /* MainTabVC.swift in Sources */,
 				7BFEBE9920A9E3E10063E809 /* AppDelegate.swift in Sources */,
 				7B208B6720AB4CDB00FBB669 /* UserProfileVC.swift in Sources */,
