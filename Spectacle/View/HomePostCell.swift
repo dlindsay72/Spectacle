@@ -10,6 +10,7 @@ import UIKit
 
 class HomePostCell: UICollectionViewCell {
     
+    //MARK: - Class Properties
     var post: Post? {
         didSet {
             guard let postImageUrl = post?.imageUrl else { return }
@@ -24,15 +25,113 @@ class HomePostCell: UICollectionViewCell {
         return imageView
     }()
     
+    let userProfileImageView: CustomImageView = {
+        let imageView = CustomImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.backgroundColor = .purple
+        return imageView
+    }()
+    
+    let usernameLbl: UILabel = {
+        let label = UILabel()
+        label.text = "Username"
+        label.font = UIFont.init(name: "Courier-Bold", size: 14)
+        return label
+    }()
+    
+    let optionsBtn: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("•••", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        return button
+    }()
+    
+    let likeBtn: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "like_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
+        return button
+    }()
+    
+    let commentBtn: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "comment").withRenderingMode(.alwaysOriginal), for: .normal)
+        return button
+    }()
+    
+    let sendMessageBtn: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "send2").withRenderingMode(.alwaysOriginal), for: .normal)
+        return button
+    }()
+    
+    let bookmarkBtn: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "ribbon").withRenderingMode(.alwaysOriginal), for: .normal)
+        return button
+    }()
+    
+    let captionLbl: UILabel = {
+        let label = UILabel()
+        let attributedText = NSMutableAttributedString(string: "Username", attributes: [NSAttributedStringKey.font: UIFont.init(name: "Courier-Bold", size: 14) ?? UIFont.boldSystemFont(ofSize: 14)])
+        attributedText.append(NSAttributedString(string: " Some caption text that will perhaps wrap onto the next line", attributes: [NSAttributedStringKey.font: UIFont.init(name: "Courier", size: 14) ?? UIFont.systemFont(ofSize: 14)]))
+        attributedText.append(NSAttributedString(string: "\n\n", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 4)]))
+        attributedText.append(NSAttributedString(string: "1 week ago", attributes: [NSAttributedStringKey.font: UIFont.init(name: "Courier", size: 13) ?? UIFont.systemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: UIColor.lightGray]))
+        label.attributedText = attributedText
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    //MARK: - Class Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        addSubview(userProfileImageView)
+        addSubview(usernameLbl)
         addSubview(photoImageView)
-        photoImageView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        addSubview(optionsBtn)
         
+        optionsBtn.anchor(top: topAnchor, left: nil, bottom: photoImageView.topAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 50, height: 0)
+        usernameLbl.anchor(top: topAnchor, left: userProfileImageView.rightAnchor, bottom: photoImageView.topAnchor, right: optionsBtn.leftAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        userProfileImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+        userProfileImageView.layer.cornerRadius = 40 / 2
+        photoImageView.anchor(top: userProfileImageView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        photoImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1).isActive = true
+        
+        setupActionButtons()
+        
+        addSubview(captionLbl)
+        captionLbl.anchor(top: likeBtn.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 5, width: 0, height: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //MARK: - Custom Methods
+    
+    fileprivate func setupActionButtons() {
+        let stackView = UIStackView(arrangedSubviews: [likeBtn, commentBtn, sendMessageBtn])
+        stackView.distribution = .fillEqually
+        
+        addSubview(stackView)
+        addSubview(bookmarkBtn)
+        bookmarkBtn.anchor(top: photoImageView.bottomAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 40, height: 50)
+        stackView.anchor(top: photoImageView.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 120, height: 50)
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
