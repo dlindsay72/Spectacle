@@ -21,6 +21,7 @@
 		7BCB4E6820B61CB3007FC5C7 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCB4E6720B61CB3007FC5C7 /* HomeVC.swift */; };
 		7BD07F4E20B4E8FF00D9E99C /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD07F4D20B4E8FF00D9E99C /* CustomImageView.swift */; };
 		7BD28D8C20B4655A004BC81E /* SharePhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD28D8B20B4655A004BC81E /* SharePhotoVC.swift */; };
+		7BD8B2F020B741F7005B3406 /* FirebaseDatabase+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD8B2EF20B741F7005B3406 /* FirebaseDatabase+Ext.swift */; };
 		7BEC1ABA20AF428600501F26 /* PhotoSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC1AB920AF428600501F26 /* PhotoSelectorCell.swift */; };
 		7BFCFA2420B4B5A800561888 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFCFA2320B4B5A800561888 /* Post.swift */; };
 		7BFCFA2620B4B85500561888 /* UserProfilePhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFCFA2520B4B85500561888 /* UserProfilePhotoCell.swift */; };
@@ -48,6 +49,7 @@
 		7BCB4E6720B61CB3007FC5C7 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		7BD07F4D20B4E8FF00D9E99C /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		7BD28D8B20B4655A004BC81E /* SharePhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePhotoVC.swift; sourceTree = "<group>"; };
+		7BD8B2EF20B741F7005B3406 /* FirebaseDatabase+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseDatabase+Ext.swift"; sourceTree = "<group>"; };
 		7BEC1AB920AF428600501F26 /* PhotoSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorCell.swift; sourceTree = "<group>"; };
 		7BFCFA2320B4B5A800561888 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		7BFCFA2520B4B85500561888 /* UserProfilePhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePhotoCell.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 			children = (
 				7B0F0EE220AA016F00AA3CC8 /* UIColor+Ext.swift */,
 				7B3D3FB720AA6C7A006B0AC8 /* UIView+Ext.swift */,
+				7BD8B2EF20B741F7005B3406 /* FirebaseDatabase+Ext.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				7BD07F4E20B4E8FF00D9E99C /* CustomImageView.swift in Sources */,
 				7BFCFA2420B4B5A800561888 /* Post.swift in Sources */,
 				7B0F0EE320AA016F00AA3CC8 /* UIColor+Ext.swift in Sources */,
+				7BD8B2F020B741F7005B3406 /* FirebaseDatabase+Ext.swift in Sources */,
 				7B1FF85D20AE26870081D279 /* PhotoSelectorVC.swift in Sources */,
 				7B32F7F120AF8FC000524FBB /* PhotoSelectorHeader.swift in Sources */,
 				7BCB4E6820B61CB3007FC5C7 /* HomeVC.swift in Sources */,

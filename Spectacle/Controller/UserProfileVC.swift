@@ -73,15 +73,10 @@ class UserProfileVC: UICollectionViewController {
     fileprivate func fetchUser() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-       
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
-            
-            self.user = User(dictionary: dictionary)
+        Database.fetchUserWith(uid: uid) { (user) in
+            self.user = user
             self.navigationItem.title = self.user?.username.capitalized
             self.collectionView?.reloadData()
-        }) { (error) in
-            print("Failed to fetch user:", error)
         }
     }
     
