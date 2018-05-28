@@ -31,7 +31,7 @@ class MainTabVC: UITabBarController {
         //home
         let homeNavController = setupNavController(withUnselectedImage: #imageLiteral(resourceName: "home_unselected"), andSelectedImage: #imageLiteral(resourceName: "home_selected"), rootViewController: HomeVC(collectionViewLayout: UICollectionViewFlowLayout()))
         //search
-        let searchNavController = setupNavController(withUnselectedImage: #imageLiteral(resourceName: "search_unselected"), andSelectedImage: #imageLiteral(resourceName: "search_selected"))
+        let searchNavController = setupNavController(withUnselectedImage: #imageLiteral(resourceName: "search_unselected"), andSelectedImage: #imageLiteral(resourceName: "search_selected"), rootViewController: UserSearchVC(collectionViewLayout: UICollectionViewFlowLayout()))
         //plus
         let plusNavController = setupNavController(withUnselectedImage: #imageLiteral(resourceName: "plus_unselected"), andSelectedImage: #imageLiteral(resourceName: "plus_unselected"))
         //like
