@@ -10,6 +10,14 @@ import UIKit
 
 class UserSearchCell: UICollectionViewCell {
     
+    var user: User? {
+        didSet {
+            usernameLbl.text = user?.username
+            guard let profileImageUrl = user?.profileImageUrl else { return }
+            profileImageView.loadImage(fromUrlString: profileImageUrl)
+        }
+    }
+    
     let profileImageView: CustomImageView = {
         let imageView = CustomImageView()
         imageView.backgroundColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)
@@ -47,3 +55,7 @@ class UserSearchCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+
+
+
