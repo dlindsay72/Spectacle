@@ -35,8 +35,14 @@ class UserSearchVC: UICollectionViewController {
         userSearchBar.anchor(top: navBar?.topAnchor, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 2, paddingRight: 8, width: 0, height: 0)
         collectionView?.register(UserSearchCell.self, forCellWithReuseIdentifier: userSearchCellId)
         collectionView?.alwaysBounceVertical = true
+        collectionView?.keyboardDismissMode = .onDrag
         
         fetchUsers()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        userSearchBar.isHidden = false
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -49,6 +55,18 @@ class UserSearchVC: UICollectionViewController {
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        userSearchBar.isHidden = true
+        userSearchBar.resignFirstResponder()
+        
+        let user = filteredUsers[indexPath.item]
+        print(user.username)
+        
+        let userProfileVC = UserProfileVC(collectionViewLayout: UICollectionViewFlowLayout())
+        userProfileVC.userId = user.uid
+        navigationController?.pushViewController(userProfileVC, animated: true)
+    }
+    
     //MARK: - Custom Methods
     fileprivate func fetchUsers() {
         let ref = Database.database().reference().child("users")
@@ -56,6 +74,11 @@ class UserSearchVC: UICollectionViewController {
             guard let dictionaries = snapshot.value as? [String: Any] else { return }
             
             dictionaries.forEach({ (key, value) in
+                if key == Auth.auth().currentUser?.uid {
+                    print("Found myself, omit from list")
+                    return
+                }
+                
                 guard let userDictionary = value as? [String: Any] else { return }
                 let user = User(uid: key, dictionary: userDictionary)
                 self.users.append(user)

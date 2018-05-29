@@ -13,6 +13,7 @@ class UserProfileVC: UICollectionViewController {
     
     //MARK: - Class Properties
     var user: User?
+    var userId: String?
     let headerIdentifier = "header"
     let userProfileCellIdentifier = "userProfileCell"
     var posts = [Post]()
@@ -23,14 +24,12 @@ class UserProfileVC: UICollectionViewController {
         
         collectionView?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         collectionView?.delegate = self
-        navigationItem.title = Auth.auth().currentUser?.uid
-        fetchUser()
-        
         collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerIdentifier)
         collectionView?.register(UserProfilePhotoCell.self, forCellWithReuseIdentifier: userProfileCellIdentifier)
         
+        fetchUser()
         setupLogoutButton()
-        fetchOrderedPosts()
+     //   fetchOrderedPosts()
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -54,7 +53,7 @@ class UserProfileVC: UICollectionViewController {
     }
     
     fileprivate func fetchOrderedPosts() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let uid = self.user?.uid else { return }
         let ref = Database.database().reference().child("posts").child(uid)
         
         ref.queryOrdered(byChild: "creationDate").observe(.childAdded, with: { (snapshot) in
@@ -71,12 +70,14 @@ class UserProfileVC: UICollectionViewController {
     }
         
     fileprivate func fetchUser() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let uid = userId ?? Auth.auth().currentUser?.uid ?? ""
+      //  guard let uid = Auth.auth().currentUser?.uid else { return }
         
         Database.fetchUserWith(uid: uid) { (user) in
             self.user = user
             self.navigationItem.title = self.user?.username.capitalized
             self.collectionView?.reloadData()
+            self.fetchOrderedPosts()
         }
     }
     
