@@ -24,6 +24,7 @@ class HomeVC: UICollectionViewController {
         
         setupNavigationItems()
         fetchPosts()
+        fetchFollowingUserIds()
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -40,6 +41,22 @@ class HomeVC: UICollectionViewController {
     //MARK: - Custom Methods
     fileprivate func setupNavigationItems() {
         navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "logo2"))
+    }
+    
+    
+    fileprivate func fetchFollowingUserIds() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        Database.database().reference().child("following").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let userIdsDictionary = snapshot.value as? [String: Any] else { return }
+            
+            userIdsDictionary.forEach({ (key, value) in
+                Database.fetchUserWith(uid: key, completion: { (user) in
+                    self.fetchPostsWith(user: user)
+                })
+            })
+        }) { (error) in
+            print("Could not fetch following user ids:", error)
+        }
     }
     
     fileprivate func fetchPosts() {
@@ -59,6 +76,10 @@ class HomeVC: UICollectionViewController {
                 
                 let post = Post(user: user, dictionary: dictionary)
                 self.posts.append(post)
+            })
+            
+            self.posts.sort(by: { (post1, post2) -> Bool in
+                return post1.creationDate.compare(post2.creationDate) == .orderedDescending
             })
             self.collectionView?.reloadData()
         }) { (error) in
