@@ -3,7 +3,7 @@
 //  Spectacle
 //
 //  Created by Dan Lindsay on 2018-05-15.
-// all from a Firebase/Instagram course I am taking by Brian Voong. 
+// learning from a Firebase/Instagram course I am taking by Brian Voong.
 //  Copyright © 2018 Dan Lindsay. All rights reserved.
 //
 
@@ -28,10 +28,12 @@ class MainTabVC: UITabBarController {
     }
     
     func setupViewControllers() {
+        let layout1 = UICollectionViewFlowLayout()
+        let layout2 = UICollectionViewFlowLayout()
         //home
-        let homeNavController = setupNavController(withUnselectedImage: #imageLiteral(resourceName: "home_unselected"), andSelectedImage: #imageLiteral(resourceName: "home_selected"), rootViewController: HomeVC(collectionViewLayout: UICollectionViewFlowLayout()))
+        let homeNavController = setupNavController(withUnselectedImage: #imageLiteral(resourceName: "home_unselected"), andSelectedImage: #imageLiteral(resourceName: "home_selected"), rootViewController: HomeVC(collectionViewLayout: layout1))
         //search
-        let searchNavController = setupNavController(withUnselectedImage: #imageLiteral(resourceName: "search_unselected"), andSelectedImage: #imageLiteral(resourceName: "search_selected"), rootViewController: UserSearchVC(collectionViewLayout: UICollectionViewFlowLayout()))
+        let searchNavController = setupNavController(withUnselectedImage: #imageLiteral(resourceName: "search_unselected"), andSelectedImage: #imageLiteral(resourceName: "search_selected"), rootViewController: UserSearchVC(collectionViewLayout: layout2))
         //plus
         let plusNavController = setupNavController(withUnselectedImage: #imageLiteral(resourceName: "plus_unselected"), andSelectedImage: #imageLiteral(resourceName: "plus_unselected"))
         //like

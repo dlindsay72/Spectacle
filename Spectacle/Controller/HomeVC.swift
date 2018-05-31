@@ -18,13 +18,17 @@ class HomeVC: UICollectionViewController {
     //MARK: - Class Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFeed), name: SharePhotoVC.updateFeedNotificationName, object: nil)
         collectionView?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         
         collectionView?.register(HomePostCell.self, forCellWithReuseIdentifier: homeCellId)
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshCollectionView), for: .valueChanged)
+        collectionView?.refreshControl = refreshControl
         
         setupNavigationItems()
-        fetchPosts()
-        fetchFollowingUserIds()
+        fetchAllPosts()
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -39,6 +43,22 @@ class HomeVC: UICollectionViewController {
     }
     
     //MARK: - Custom Methods
+    
+    @objc func refreshCollectionView() {
+        posts.removeAll()
+        collectionView?.reloadData()
+        fetchAllPosts()
+    }
+    
+    @objc func updateFeed() {
+        refreshCollectionView()
+    }
+    
+    fileprivate func fetchAllPosts() {
+        fetchPosts()
+        fetchFollowingUserIds()
+    }
+    
     fileprivate func setupNavigationItems() {
         navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "logo2"))
     }
@@ -70,6 +90,7 @@ class HomeVC: UICollectionViewController {
         let ref = Database.database().reference().child("posts").child(user.uid)
         
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            self.collectionView?.refreshControl?.endRefreshing()
             guard let dictionaries = snapshot.value as? [String: Any] else { return }
             dictionaries.forEach({ (key, value) in
                 guard let dictionary = value as? [String: Any] else { return }
