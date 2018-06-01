@@ -26,6 +26,7 @@
 		7BD28D8C20B4655A004BC81E /* SharePhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD28D8B20B4655A004BC81E /* SharePhotoVC.swift */; };
 		7BD8B2F020B741F7005B3406 /* FirebaseDatabase+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD8B2EF20B741F7005B3406 /* FirebaseDatabase+Ext.swift */; };
 		7BEC1ABA20AF428600501F26 /* PhotoSelectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEC1AB920AF428600501F26 /* PhotoSelectorCell.swift */; };
+		7BEF6C5A20C0BF1400C26432 /* CameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEF6C5920C0BF1400C26432 /* CameraVC.swift */; };
 		7BFCFA2420B4B5A800561888 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFCFA2320B4B5A800561888 /* Post.swift */; };
 		7BFCFA2620B4B85500561888 /* UserProfilePhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFCFA2520B4B85500561888 /* UserProfilePhotoCell.swift */; };
 		7BFEBE9920A9E3E10063E809 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFEBE9820A9E3E10063E809 /* AppDelegate.swift */; };
@@ -57,6 +58,7 @@
 		7BD28D8B20B4655A004BC81E /* SharePhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePhotoVC.swift; sourceTree = "<group>"; };
 		7BD8B2EF20B741F7005B3406 /* FirebaseDatabase+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseDatabase+Ext.swift"; sourceTree = "<group>"; };
 		7BEC1AB920AF428600501F26 /* PhotoSelectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectorCell.swift; sourceTree = "<group>"; };
+		7BEF6C5920C0BF1400C26432 /* CameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraVC.swift; sourceTree = "<group>"; };
 		7BFCFA2320B4B5A800561888 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		7BFCFA2520B4B85500561888 /* UserProfilePhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePhotoCell.swift; sourceTree = "<group>"; };
 		7BFEBE9520A9E3E10063E809 /* Spectacle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spectacle.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,6 +158,7 @@
 				7BD28D8B20B4655A004BC81E /* SharePhotoVC.swift */,
 				7BCB4E6720B61CB3007FC5C7 /* HomeVC.swift */,
 				7B5E7EAB20BC969600A246B2 /* UserSearchVC.swift */,
+				7BEF6C5920C0BF1400C26432 /* CameraVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				7BCB4E6820B61CB3007FC5C7 /* HomeVC.swift in Sources */,
 				7B208B6520AB4BE100FBB669 /* MainTabVC.swift in Sources */,
 				7BFEBE9920A9E3E10063E809 /* AppDelegate.swift in Sources */,
+				7BEF6C5A20C0BF1400C26432 /* CameraVC.swift in Sources */,
 				7B208B6720AB4CDB00FBB669 /* UserProfileVC.swift in Sources */,
 				7B5E7EAC20BC969600A246B2 /* UserSearchVC.swift in Sources */,
 				7BC3BDB520BF70A4004F1CAD /* Date+Ext.swift in Sources */,

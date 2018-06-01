@@ -54,6 +54,12 @@ class HomeVC: UICollectionViewController {
         refreshCollectionView()
     }
     
+    @objc func activateCamera() {
+        print("Showing camera")
+        let cameraVC = CameraVC()
+        present(cameraVC, animated: true, completion: nil)
+    }
+    
     fileprivate func fetchAllPosts() {
         fetchPosts()
         fetchFollowingUserIds()
@@ -61,6 +67,8 @@ class HomeVC: UICollectionViewController {
     
     fileprivate func setupNavigationItems() {
         navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "logo2"))
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "camera3").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(activateCamera))
     }
     
     
