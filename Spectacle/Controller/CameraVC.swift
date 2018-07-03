@@ -11,13 +11,14 @@ import AVFoundation
 
 class CameraVC: UIViewController {
     
+    //MARK: - Class Properties
+    let output = AVCapturePhotoOutput()
     let dismissBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "right_arrow_shadow").withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(backBtnPressed), for: .touchUpInside)
         return button
     }()
-    
     let capturePhotoBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "capture_photo").withRenderingMode(.alwaysOriginal), for: .normal)
@@ -25,6 +26,7 @@ class CameraVC: UIViewController {
         return button
     }()
     
+    //MARK: - Class Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,8 +34,14 @@ class CameraVC: UIViewController {
         setupButtonsOnView()
     }
     
+    //MARK: - Custom Methods
     @objc func capturePhoto() {
         print("Capturing photo")
+        
+        let settings = AVCapturePhotoSettings()
+        guard let previewFormatType = settings.availablePreviewPhotoPixelFormatTypes.first else { return }
+        settings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewFormatType]
+        output.capturePhoto(with: settings, delegate: self)
     }
     
     @objc func backBtnPressed() {
@@ -64,7 +72,7 @@ class CameraVC: UIViewController {
         }
         
         //setup outputs
-        let output = AVCapturePhotoOutput()
+        
         if captureSession.canAddOutput(output) {
             captureSession.addOutput(output)
         }
@@ -78,7 +86,22 @@ class CameraVC: UIViewController {
     }
 }
 
-
+//MARK: - AVCapturePhotoCaptureDelegate
+extension CameraVC: AVCapturePhotoCaptureDelegate {
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        guard error == nil else {
+            print("Failed to capture photo: \(error.debugDescription)")
+            return
+        }
+        guard let imageData = photo.fileDataRepresentation() else { return }
+        
+        let previewImage = UIImage(data: imageData)
+        let previewImageView = UIImageView(image: previewImage)
+        view.addSubview(previewImageView)
+        previewImageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        print("finish processing photo sample buffer")
+    }
+}
 
 
 
