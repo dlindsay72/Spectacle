@@ -13,6 +13,8 @@ class CameraVC: UIViewController {
     
     //MARK: - Class Properties
     let output = AVCapturePhotoOutput()
+    let customAnimationPresentor = CustomAnimationPresenter()
+    let customAnimationDismisser = CustomAnimationDismisser()
     let dismissBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "right_arrow_shadow").withRenderingMode(.alwaysOriginal), for: .normal)
@@ -33,6 +35,8 @@ class CameraVC: UIViewController {
     //MARK: - Class Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        transitioningDelegate = self
         
         setupCaptureSession()
         setupButtonsOnView()
@@ -104,11 +108,17 @@ extension CameraVC: AVCapturePhotoCaptureDelegate {
         containerView.previewImageView.image = previewImage
         view.addSubview(containerView)
         containerView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        
-//        let previewImageView = UIImageView(image: previewImage)
-//        view.addSubview(previewImageView)
-//        previewImageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-//        print("finish processing photo sample buffer")
+    }
+}
+
+//MARK: - UIViewControllerTransitioningDelegate
+extension CameraVC: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return customAnimationPresentor
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return customAnimationDismisser
     }
 }
 
