@@ -8,9 +8,14 @@
 
 import UIKit
 
+protocol HomePostCellDelegate {
+    func didTapCommentBtnOn(post: Post)
+}
+
 class HomePostCell: UICollectionViewCell {
     
     //MARK: - Class Properties
+    var delegate: HomePostCellDelegate?
     var post: Post? {
         didSet {
             guard let postImageUrl = post?.imageUrl else { return }
@@ -58,9 +63,10 @@ class HomePostCell: UICollectionViewCell {
         return button
     }()
     
-    let commentBtn: UIButton = {
+    lazy var commentBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "comment").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(commentBtnWasPressed), for: .touchUpInside)
         return button
     }()
     
@@ -111,6 +117,12 @@ class HomePostCell: UICollectionViewCell {
     }
     
     //MARK: - Custom Methods
+    
+    @objc func commentBtnWasPressed() {
+        print("Trying to comment")
+        guard let post = post else { return }
+        delegate?.didTapCommentBtnOn(post: post)
+    }
     
     fileprivate func setupAttributedCaption() {
         guard let post = self.post else { return }

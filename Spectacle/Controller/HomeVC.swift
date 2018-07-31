@@ -38,6 +38,7 @@ class HomeVC: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: homeCellId, for: indexPath) as! HomePostCell
         cell.post = posts[indexPath.item]
+        cell.delegate = self
         
         return cell
     }
@@ -126,6 +127,16 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
         height += 50
         height += 60
         return CGSize(width: view.frame.width, height: height)
+    }
+}
+
+//MARK: - HomePostCellDelegate
+extension HomeVC: HomePostCellDelegate {
+    func didTapCommentBtnOn(post: Post) {
+        print(post.caption)
+        print("Message coming through HomeVC")
+        let commentsVC = CommentsVC(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(commentsVC, animated: true)
     }
 }
 

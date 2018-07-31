@@ -25,6 +25,7 @@
 		7BC5E6D720AB7DE400219C49 /* UserProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC5E6D620AB7DE400219C49 /* UserProfileHeader.swift */; };
 		7BC95DFE20B621FA0007121B /* HomePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC95DFD20B621FA0007121B /* HomePostCell.swift */; };
 		7BCB4E6820B61CB3007FC5C7 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCB4E6720B61CB3007FC5C7 /* HomeVC.swift */; };
+		7BCC3839210FE58F0076676B /* CommentsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCC3838210FE58F0076676B /* CommentsVC.swift */; };
 		7BD07F4E20B4E8FF00D9E99C /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD07F4D20B4E8FF00D9E99C /* CustomImageView.swift */; };
 		7BD28D8C20B4655A004BC81E /* SharePhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD28D8B20B4655A004BC81E /* SharePhotoVC.swift */; };
 		7BD8B2F020B741F7005B3406 /* FirebaseDatabase+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD8B2EF20B741F7005B3406 /* FirebaseDatabase+Ext.swift */; };
@@ -60,6 +61,7 @@
 		7BC5E6D620AB7DE400219C49 /* UserProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeader.swift; sourceTree = "<group>"; };
 		7BC95DFD20B621FA0007121B /* HomePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostCell.swift; sourceTree = "<group>"; };
 		7BCB4E6720B61CB3007FC5C7 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		7BCC3838210FE58F0076676B /* CommentsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsVC.swift; sourceTree = "<group>"; };
 		7BD07F4D20B4E8FF00D9E99C /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		7BD28D8B20B4655A004BC81E /* SharePhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePhotoVC.swift; sourceTree = "<group>"; };
 		7BD8B2EF20B741F7005B3406 /* FirebaseDatabase+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseDatabase+Ext.swift"; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				7BCB4E6720B61CB3007FC5C7 /* HomeVC.swift */,
 				7B5E7EAB20BC969600A246B2 /* UserSearchVC.swift */,
 				7BEF6C5920C0BF1400C26432 /* CameraVC.swift */,
+				7BCC3838210FE58F0076676B /* CommentsVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				7BB9FCF6210F93390004FF2F /* CustomAnimationDismisser.swift in Sources */,
 				7B10373720BC9D77004D2ED9 /* UserSearchCell.swift in Sources */,
 				7BD28D8C20B4655A004BC81E /* SharePhotoVC.swift in Sources */,
+				7BCC3839210FE58F0076676B /* CommentsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
