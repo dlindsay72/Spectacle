@@ -104,7 +104,8 @@ class HomeVC: UICollectionViewController {
             dictionaries.forEach({ (key, value) in
                 guard let dictionary = value as? [String: Any] else { return }
                 
-                let post = Post(user: user, dictionary: dictionary)
+                var post = Post(user: user, dictionary: dictionary)
+                post.id = key
                 self.posts.append(post)
             })
             
@@ -136,6 +137,7 @@ extension HomeVC: HomePostCellDelegate {
         print(post.caption)
         print("Message coming through HomeVC")
         let commentsVC = CommentsVC(collectionViewLayout: UICollectionViewFlowLayout())
+        commentsVC.post = post
         navigationController?.pushViewController(commentsVC, animated: true)
     }
 }
