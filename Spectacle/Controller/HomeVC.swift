@@ -101,18 +101,31 @@ class HomeVC: UICollectionViewController {
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             self.collectionView?.refreshControl?.endRefreshing()
             guard let dictionaries = snapshot.value as? [String: Any] else { return }
+            
             dictionaries.forEach({ (key, value) in
                 guard let dictionary = value as? [String: Any] else { return }
+                guard let uid = Auth.auth().currentUser?.uid else { return }
                 
                 var post = Post(user: user, dictionary: dictionary)
                 post.id = key
-                self.posts.append(post)
+                
+                Database.database().reference().child("likes").child(key).child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+                    print(snapshot)
+                    if let value = snapshot.value as? Int, value == 1 {
+                        post.hasLiked = true
+                    } else {
+                        post.hasLiked = false
+                    }
+                    
+                    self.posts.append(post)
+                    self.posts.sort(by: { (post1, post2) -> Bool in
+                        return post1.creationDate.compare(post2.creationDate) == .orderedDescending
+                    })
+                    self.collectionView?.reloadData()
+                }, withCancel: { (error) in
+                    print("Failed to fetch like info for post:", error)
+                })
             })
-            
-            self.posts.sort(by: { (post1, post2) -> Bool in
-                return post1.creationDate.compare(post2.creationDate) == .orderedDescending
-            })
-            self.collectionView?.reloadData()
         }) { (error) in
             print("Failed to fetch posts:", error)
         }
@@ -133,6 +146,31 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
 
 //MARK: - HomePostCellDelegate
 extension HomeVC: HomePostCellDelegate {
+    func didLike(for cell: HomePostCell) {
+        print("Handling like inside HomeVC")
+        guard let indexPath = collectionView?.indexPath(for: cell) else { return }
+        var post = self.posts[indexPath.item]
+        print(post.caption)
+        
+        guard let postId = post.id else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let values = [uid: post.hasLiked == true ? 0 : 1]
+        
+        Database.database().reference().child("likes").child(postId).updateChildValues(values) { (error, _) in
+            if let error = error {
+                print("Failed to like post:", error)
+                return
+            }
+            
+            print("Successfully liked post")
+            post.hasLiked = !post.hasLiked
+            
+            self.posts[indexPath.item] = post
+            
+            self.collectionView?.reloadItems(at: [indexPath])
+        }
+    }
+    
     func didTapCommentBtnOn(post: Post) {
         print(post.caption)
         print("Message coming through HomeVC")
