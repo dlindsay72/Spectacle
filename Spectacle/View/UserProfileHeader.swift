@@ -9,9 +9,15 @@
 import UIKit
 import Firebase
 
+protocol UserProfileHeaderDelegate {
+    func didChangeToListView()
+    func didChangeToGridView()
+}
+
 class UserProfileHeader: UICollectionViewCell {
     
     //MARK: - Class Properties
+    var delegate: UserProfileHeaderDelegate?
     var user: User? {
         didSet {
             guard let profileImageUrl = user?.profileImageUrl else { return }
@@ -27,16 +33,18 @@ class UserProfileHeader: UICollectionViewCell {
         return imageView
     }()
     
-    let gridBtn: UIButton = {
+    lazy var gridBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "grid"), for: .normal)
+        button.addTarget(self, action: #selector(gridBtnWasPressed), for: .touchUpInside)
         return button
     }()
     
-    let listBtn: UIButton = {
+    lazy var listBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "list"), for: .normal)
         button.tintColor = UIColor(white: 0, alpha: 0.2)
+        button.addTarget(self, action: #selector(listBtnWasPressed), for: .touchUpInside)
         return button
     }()
     
@@ -140,6 +148,20 @@ class UserProfileHeader: UICollectionViewCell {
                 print("Failed to check if following:", error)
             }
         }
+    }
+    
+    @objc func gridBtnWasPressed() {
+        print("Grid button pressed")
+        gridBtn.tintColor = .mainBlue()
+        listBtn.tintColor = .customGray()
+        delegate?.didChangeToGridView()
+    }
+    
+    @objc func listBtnWasPressed() {
+        print("List button was pressed")
+        listBtn.tintColor = .mainBlue()
+        gridBtn.tintColor = .customGray()
+        delegate?.didChangeToListView()
     }
     
     @objc fileprivate func editProfileFollowBtnPressed() {
