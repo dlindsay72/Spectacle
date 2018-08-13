@@ -110,7 +110,7 @@ class HomeVC: UICollectionViewController {
                 post.id = key
                 
                 Database.database().reference().child("likes").child(key).child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-                    print(snapshot)
+                    
                     if let value = snapshot.value as? Int, value == 1 {
                         post.hasLiked = true
                     } else {
@@ -150,7 +150,7 @@ extension HomeVC: HomePostCellDelegate {
         print("Handling like inside HomeVC")
         guard let indexPath = collectionView?.indexPath(for: cell) else { return }
         var post = self.posts[indexPath.item]
-        print(post.caption)
+    //    print(post.caption)
         
         guard let postId = post.id else { return }
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -172,7 +172,7 @@ extension HomeVC: HomePostCellDelegate {
     }
     
     func didTapCommentBtnOn(post: Post) {
-        print(post.caption)
+   //     print(post.caption)
         print("Message coming through HomeVC")
         let commentsVC = CommentsVC(collectionViewLayout: UICollectionViewFlowLayout())
         commentsVC.post = post
