@@ -145,7 +145,7 @@ class UserProfileVC: UICollectionViewController {
     }
     
     @objc func logoutUser() {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (_) in
             do {
                 try Auth.auth().signOut()

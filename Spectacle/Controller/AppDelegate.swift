@@ -8,9 +8,10 @@
 
 import UIKit
 import Firebase
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
@@ -20,7 +21,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.rootViewController = MainTabVC()
+        
+        attemptToRegister(applicationForNotifications: application)
+        
         return true
+    }
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        print("Registered with FCM with token:", fcmToken)
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler(.alert)
+    }
+    
+    private func attemptToRegister(applicationForNotifications app: UIApplication) {
+        print("Attempting to register APNS...")
+        Messaging.messaging().delegate = self
+        UNUserNotificationCenter.current().delegate = self
+        
+        //user notifications auth
+        let options: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(options: options) { (granted, error) in
+            if let error = error {
+                print("Failed to request auth:", error)
+                return
+            }
+            
+            if granted {
+                print("Auth granted.")
+            } else {
+                print("Auth denied.")
+            }
+        }
+        
+        app.registerForRemoteNotifications()
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("Registered for notifications:", deviceToken)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
