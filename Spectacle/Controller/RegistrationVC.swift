@@ -148,8 +148,9 @@ class RegistrationVC: UIViewController {
                 print("Successfully uploaded profile image", profileImageURL)
                 
                 guard let uid = user?.uid else { return }
+                guard let fcmToken = Messaging.messaging().fcmToken else { return }
                 
-                let dictionaryValues = ["username": username, "profileImageUrl": profileImageURL]
+                let dictionaryValues = ["username": username, "profileImageUrl": profileImageURL, "fcmToken": fcmToken]
                 let values = [uid: dictionaryValues]
                 
                 Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (error, ref) in
