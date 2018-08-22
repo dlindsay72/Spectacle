@@ -12,6 +12,38 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
  response.send("Hello from Firebase Dreamerongo!");
 });
 
+// listen for Following events and then trigger a push notification
+exports.observeFollowing = functions.database.ref('/following/{uid}/{followingId}')
+    .onCreate((snapshot, context) => {
+     //   const original = snapshot.val();
+        var uid = context.params.uid;
+        var followingId = context.params.followingId;
+
+        console.log('User: ', uid, ' is following ', followingId);
+
+        return admin.database().ref('/users/' + followingId).once('value', snapshot => {
+            var userWeAreFollowing = snapshot.val();
+            return admin.database().ref('/users/' + uid).once('value', snapshot => {
+                var userDoingTHeFollowing = snapshot.val();
+                var message = {
+                    notification: {
+                        title: "You have a new follower",
+                        body: userDoingTHeFollowing.username + ' is now following you'
+                    }
+                }
+                console.log("This is the users fcmToken we are following: ", userWeAreFollowing.fcmToken);
+                admin.messaging().sendToDevice(userWeAreFollowing.fcmToken, message)
+                    .then(response => {
+                        console.log('Successfully sent this message from observeFollowing function:', response);
+                        return response;
+                    })
+                    .catch((error) => {
+                        console.log('Error sending this particular message:', error);
+                    });
+            })
+        })
+    })
+
 exports.sendPushNotifications = functions.https.onRequest((req, res) => {
     res.send("Attempting to send push notifications");
 
