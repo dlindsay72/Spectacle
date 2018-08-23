@@ -31,6 +31,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         print("Registered with FCM with token:", fcmToken)
     }
     
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        
+        if let followerId = userInfo["followerId"] as? String {
+            print("This is the follower id: ", followerId)
+            
+            //I want to push the UserProfileVC for followerId somehow
+            let userProfileVC = UserProfileVC(collectionViewLayout: UICollectionViewFlowLayout())
+            userProfileVC.userId = followerId
+            
+            //how do we access our main ui from AppDelegate
+            if let mainTabVC = window?.rootViewController as? MainTabVC {
+                mainTabVC.selectedIndex = 0
+                mainTabVC.presentedViewController?.dismiss(animated: true, completion: nil)
+                
+                if let homeVC = mainTabVC.viewControllers?.first as? UINavigationController {
+                    homeVC.pushViewController(userProfileVC, animated: true)
+                }
+            }
+        }
+    }
+    
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler(.alert)
     }

@@ -29,6 +29,9 @@ exports.observeFollowing = functions.database.ref('/following/{uid}/{followingId
                     notification: {
                         title: "You have a new follower",
                         body: userDoingTHeFollowing.username + ' is now following you'
+                    },
+                    data: {
+                        followerId: uid
                     }
                 }
                 console.log("This is the users fcmToken we are following: ", userWeAreFollowing.fcmToken);
