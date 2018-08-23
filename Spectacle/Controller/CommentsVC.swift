@@ -24,40 +24,13 @@ class CommentsVC: UICollectionViewController {
     var post: Post?
     let commentCellId = "commentCell"
     var comments = [Comment]()
-    let commentTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Enter comment"
-        textField.font = UIFont(name: "Courier", size: 20)
-        
-        return textField
-    }()
     
-    lazy var containerView: UIView = {
-        let containerView = UIView()
-        containerView.backgroundColor = .white
-        containerView.frame = CGRect(x: 0, y: 0, width: 100, height: 60)
+    lazy var containerView: CommentInputAccessoryView = {
+        let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 60)
+        let commentInputAccessoryView = CommentInputAccessoryView(frame: frame)
+        commentInputAccessoryView.delegate = self
         
-        let submitBtn = UIButton(type: .system)
-        submitBtn.setTitle("Submit", for: .normal)
-        submitBtn.setTitleColor(.black, for: .normal)
-        submitBtn.titleLabel?.font = UIFont(name: "Courier-Bold", size: 20)
-        submitBtn.addTarget(self, action: #selector(submitBtnWasPressed), for: .touchUpInside)
-        containerView.addSubview(submitBtn)
-        
-        submitBtn.anchor(top: containerView.topAnchor, left: nil, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 90, height: 0)
-        
-        
-        containerView.addSubview(self.commentTextField)
-        self.commentTextField.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: submitBtn.leftAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        
-        let lineSeparatorView = UIView()
-        lineSeparatorView.backgroundColor = UIColor.rgb(red: 230, green: 230, blue: 230)
-        containerView.addSubview(lineSeparatorView)
-        
-        lineSeparatorView.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: nil, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 1)
-        
-        
-        return containerView
+        return commentInputAccessoryView
     }()
     
     override func viewDidLoad() {
@@ -95,21 +68,6 @@ class CommentsVC: UICollectionViewController {
         cell.comment = self.comments[indexPath.item]
         
         return cell
-    }
-    
-    @objc func submitBtnWasPressed() {
-        print("post id:", self.post?.id ?? "")
-        print("Inserting comment:", commentTextField.text ?? "")
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        let postId = self.post?.id ?? ""
-        let values = ["text": commentTextField.text ?? "", "creationDate": Date().timeIntervalSince1970, "uid": uid] as [String : Any]
-        Database.database().reference().child("comments").child(postId).childByAutoId().updateChildValues(values) { (error, ref) in
-            if let err = error {
-                print("Failed to insert comment:", err)
-            }
-            
-            print("Successfully inserted comment")
-        }
     }
     
     fileprivate func fetchComments() {
@@ -152,6 +110,25 @@ extension CommentsVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
+}
+
+//MARK: CommentInputAccessoryViewDelegate
+
+extension CommentsVC: CommentInputAccessoryViewDelegate {
+    func didSubmit(comment: String) {
+        print("Trying to insert comment")
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let postId = self.post?.id ?? ""
+        let values = ["text": comment, "creationDate": Date().timeIntervalSince1970, "uid": uid] as [String : Any]
+        Database.database().reference().child("comments").child(postId).childByAutoId().updateChildValues(values) { (error, ref) in
+            if let err = error {
+                print("Failed to insert comment:", err)
+            }
+            
+            self.containerView.clearCommentTextField()
+        }
+    }
+    
 }
 
 
