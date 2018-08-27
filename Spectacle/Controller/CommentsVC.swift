@@ -125,7 +125,7 @@ extension CommentsVC: CommentInputAccessoryViewDelegate {
                 print("Failed to insert comment:", err)
             }
             
-            self.containerView.clearCommentTextField()
+            self.containerView.clearCommentTextView()
         }
     }
     

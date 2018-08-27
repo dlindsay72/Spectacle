@@ -26,22 +26,31 @@ class CommentInputAccessoryView: UIView {
         return button
     }()
     
-    fileprivate let commentTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Enter comment"
-        textField.font = UIFont(name: "Courier", size: 20)
+    fileprivate let commentTextView: CommentInputTextView = {
+        let textView = CommentInputTextView()
+ //       textView.placeholder = "Enter comment"
+        textView.isScrollEnabled = false
         
-        return textField
+        textView.font = UIFont(name: "Courier", size: 20)
+        
+        return textView
     }()
+    
+    override var intrinsicContentSize: CGSize {
+        return .zero
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .white
+        autoresizingMask = .flexibleHeight
+        
         
         addSubview(submitBtn)
-        submitBtn.anchor(top: topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 90, height: 0)
+        submitBtn.anchor(top: topAnchor, left: nil, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 90, height: 60)
         
-        addSubview(commentTextField)
-        commentTextField.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: submitBtn.leftAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        addSubview(commentTextView)
+        commentTextView.anchor(top: topAnchor, left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: submitBtn.leftAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 8, paddingRight: 0, width: 0, height: 0)
         
         setupLineSeparatorView()
     }
@@ -51,7 +60,7 @@ class CommentInputAccessoryView: UIView {
     }
     
     @objc func submitBtnWasPressed() {
-        guard let commentText = commentTextField.text else { return }
+        guard let commentText = commentTextView.text else { return }
         
         delegate?.didSubmit(comment: commentText)
     }
@@ -64,8 +73,9 @@ class CommentInputAccessoryView: UIView {
         lineSeparatorView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 1)
     }
     
-    func clearCommentTextField() {
-        commentTextField.text = nil
+    func clearCommentTextView() {
+        commentTextView.text = nil
+        commentTextView.showPlaceholderLbl()
     }
     
     

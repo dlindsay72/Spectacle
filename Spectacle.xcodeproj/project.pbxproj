@@ -19,6 +19,7 @@
 		7B5E7EAC20BC969600A246B2 /* UserSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E7EAB20BC969600A246B2 /* UserSearchVC.swift */; };
 		7B776148210F61CF00FC7A18 /* PreviewPhotoContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B776147210F61CF00FC7A18 /* PreviewPhotoContainerView.swift */; };
 		7B8AB2F020B5F10A00B59554 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8AB2EF20B5F10A00B59554 /* User.swift */; };
+		7B920003213471C300D1D0C4 /* CommentInputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B920002213471C300D1D0C4 /* CommentInputTextView.swift */; };
 		7BB45A8C210F8B75001B5DAC /* CustomAnimationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB45A8B210F8B75001B5DAC /* CustomAnimationPresenter.swift */; };
 		7BB8E56A2111337A00CFA14E /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB8E5692111337A00CFA14E /* CommentCell.swift */; };
 		7BB9FCF6210F93390004FF2F /* CustomAnimationDismisser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB9FCF5210F93390004FF2F /* CustomAnimationDismisser.swift */; };
@@ -59,6 +60,7 @@
 		7B5E7EAB20BC969600A246B2 /* UserSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchVC.swift; sourceTree = "<group>"; };
 		7B776147210F61CF00FC7A18 /* PreviewPhotoContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewPhotoContainerView.swift; sourceTree = "<group>"; };
 		7B8AB2EF20B5F10A00B59554 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		7B920002213471C300D1D0C4 /* CommentInputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentInputTextView.swift; sourceTree = "<group>"; };
 		7BB45A8B210F8B75001B5DAC /* CustomAnimationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationPresenter.swift; sourceTree = "<group>"; };
 		7BB8E5692111337A00CFA14E /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		7BB9FCF5210F93390004FF2F /* CustomAnimationDismisser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationDismisser.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				7BB9FCF5210F93390004FF2F /* CustomAnimationDismisser.swift */,
 				7BB8E5692111337A00CFA14E /* CommentCell.swift */,
 				7BCA45AA212F481300496F28 /* CommentInputAccessoryView.swift */,
+				7B920002213471C300D1D0C4 /* CommentInputTextView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				7B208B6520AB4BE100FBB669 /* MainTabVC.swift in Sources */,
 				7BFEBE9920A9E3E10063E809 /* AppDelegate.swift in Sources */,
 				7BCA45AB212F481300496F28 /* CommentInputAccessoryView.swift in Sources */,
+				7B920003213471C300D1D0C4 /* CommentInputTextView.swift in Sources */,
 				7BEF6C5A20C0BF1400C26432 /* CameraVC.swift in Sources */,
 				7B208B6720AB4CDB00FBB669 /* UserProfileVC.swift in Sources */,
 				7B5E7EAC20BC969600A246B2 /* UserSearchVC.swift in Sources */,
